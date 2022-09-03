@@ -1,7 +1,7 @@
 import { Router } from "express";
-import battleRouter from "./battleRouter";
+import createCardRouter from "./createCardRouter";
 
 const router = Router();
-router.use(battleRouter);
+router.use(createCardRouter);
 
 export default router;
