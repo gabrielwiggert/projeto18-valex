@@ -1,6 +1,9 @@
 import * as cardRepository from "../repositories/cardRepository";
 import * as employeeRepository from "../repositories/employeeRepository";
 import * as errors from "../errors"
+import { faker } from '@faker-js/faker';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
 
 export type TransactionTypes =
   | "groceries"
@@ -15,10 +18,10 @@ export async function createCard(idEmployee: number, cardType: TransactionTypes)
   if (employee) {
     const cardData = {
       employeeId: idEmployee,
-      number: "123",
+      number: faker.finance.creditCardNumber(),
       cardholderName: employee.fullName,
-      securityCode: "123",
-      expirationDate: "123",
+      securityCode: cryptr.encrypt(`${faker.finance.creditCardCVV()}`),
+      expirationDate: `${Date.prototype.getMonth()+1}/${Date.prototype.getFullYear()+5}`,
       password: "123",
       isVirtual: true,
       originalCardId: 123,
