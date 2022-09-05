@@ -16,15 +16,15 @@ export async function createCard(idEmployee: number, cardType: TransactionTypes)
   const employee = await checkEmployee(idEmployee, cardType);
 
   if (employee) {
+    const today = new Date();
     const cardData = {
       employeeId: idEmployee,
       number: faker.finance.creditCardNumber(),
       cardholderName: employee.fullName,
       securityCode: cryptr.encrypt(`${faker.finance.creditCardCVV()}`),
-      expirationDate: `${Date.prototype.getMonth()+1}/${Date.prototype.getFullYear()+5}`,
+      expirationDate: `${today.getMonth()+1}/${today.getFullYear()+5}`,
       password: "123",
       isVirtual: true,
-      originalCardId: 123,
       isBlocked: true,
       type: cardType
     }
