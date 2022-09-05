@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import * as createCardService from "../services/createCardService";
 
 export async function createCard(req: Request, res: Response) {
-  const { body }  = req.body;
+  const { idEmployee, cardType }  = req.body;
 
-  if (body) {
-    return res.sendStatus(422);
+  try {
+    await createCardService.createCard(idEmployee, cardType);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(403);
   }
 
-  const battleResult = await createCardService.createCard();
-  res.send(battleResult);
+  return res.sendStatus(201);
 }
